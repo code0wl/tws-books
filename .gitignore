@@ -1,3 +1,5 @@
 .idea
 node_modules
 .vagrant
+Vagrantfile
+pg_config.sh
