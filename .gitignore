@@ -2,4 +2,4 @@
 node_modules
 .vagrant
 Vagrantfile
-pg_config.sh
+pg_config.shg
