@@ -4,7 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Library, Book
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./node_modules')
+
 
 engine = create_engine('sqlite:///library.db')
 Base.metadata.bind = engine
@@ -16,6 +17,11 @@ session = DBSession()
 @app.route('/')
 def renderHome():
     return render_template('index.html')
+
+
+@app.route('/add')
+def renderBook():
+    return render_template('addbook.html')
 
 
 @app.route('/books')

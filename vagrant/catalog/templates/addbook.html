@@ -1,0 +1,53 @@
+{% include 'partials/head.html' %}
+<form method="post" action="">
+    <label for="title">
+        <input name="title" placeholder="Title" type="text" required/>
+    </label>
+
+    <label for="author"> 
+        <input name="author" placeholder="Author" type="text"/>
+    </label>
+
+    <select name="" id=""> 
+        <option value="file-pdf-o">Pick a medium</option>
+        <option value="file-pdf-o">PDF</option>
+        <option value="book">Physical</option>
+    </select>
+
+    <label for="isbn">
+        <input name="author" placeholder="isbn" type="text" />
+    </label>
+
+    <label for="description"> 
+        <textarea name="description" placeholder="Description" id="" cols="30" rows="10"></textarea>
+    </label>
+
+    <label for="released">
+        <input name="released" placeholder="Publication date" type="text"/>
+    </label>
+
+    <label for="publisher">
+        <input name="released" placeholder="Publisher" type="text"/>
+    </label>
+
+    <label for="pic">
+        <input type="file" name="pic" accept="image/*">
+    </label>
+
+    <select name="" id="" required>
+        <optgroup> Web technology
+            <option value="">Frontend</option>
+            <option value="">Backend</option>
+        </optgroup>
+
+        <optgroup> Mobile Native
+            <option value="">Frontend</option>
+            <option value="">Backend</option>
+        </optgroup>
+    </select>
+
+    <button type="submit">Add book</button>
+
+</form>
+
+{% include 'partials/footer.html' %}

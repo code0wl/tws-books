@@ -19,11 +19,11 @@ session.add(library1)
 
 book1 = Book(title="Java for dummies", isbn="isbn123",
              description="Some description", author="Some author",
-             released="10-10-2010", category="Frontend")
+             released="10-10-2010", category="Frontend", medium="file-pdf-o")
 
 book2 = Book(title="In yo face", isbn="isbn123",
              description="Some description", author="Some author",
-             released="10-10-2010", category="Frontend")
+             released="10-10-2010", category="Frontend", medium="book")
 
 session.add(book1)
 session.add(book2)

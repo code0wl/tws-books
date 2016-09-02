@@ -16,6 +16,7 @@ class Book(Base):
     __tablename__ = "book"
     id = Column(Integer, primary_key=True)
     title = Column(String(5000), nullable=True)
+    medium = Column(String(100), nullable=False)
     isbn = Column(String(2000), nullable=True)
     description = Column(String(250), nullable=True)
     author = Column(String(1000), nullable=True)

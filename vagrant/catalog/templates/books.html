@@ -8,8 +8,9 @@
         <ul>
             {% for i in items %}
             <li class="library-books__book">
-                <h3>{{i.title}}</h3>
+                <h3> <span class="fa fa-{{i.medium}}"></span> {{i.title}}</h3>
                 <p>{{i.description}}</p>
+                <p><span class="fa fa-user"></span> Author:</p>
             </li>
             {% endfor %}
         </ul>
