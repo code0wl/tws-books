@@ -6,28 +6,26 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 
-class Shelter(Base):
-    __tablename__ = "shelter"
+class Books(Base):
+    __tablename__ = "books"
+    id = Column(Integer, primary_key=True)
+    category = Column(String(250), nullable=False)
+
+
+class Book(Base):
+    __tablename__ = "book"
     id = Column(Integer, primary_key=True)
     name = Column(String(80), nullable=False)
-    address = Column(String(250))
-    city = Column(String(500))
-    state = Column(String(500))
-    zipCode = Column(String(500))
-    website = Column(String(500), nullable=True)
+    isbn = Column(String(2000), nullable=True)
+    genre = Column(String(2000), nullable=False)
+    description = Column(String(250), nullable=True)
+    author = Column(String(1000), nullable=True)
+    release = Column(String(1000), nullable=True)
+    publisher = Column(String(1000), nullable=True)
+    image = Column(String(5000), nullable=True)
+    book_id = Column(Integer, ForeignKey("books.id"))
+    books = relationship(Books)
 
 
-class Puppy(Base):
-    __tablename__ = "puppy"
-    name = Column(String(80), nullable=False)
-    id = Column(Integer, primary_key=True)
-    dateOfBirth = Column(String(1000))
-    picture = Column(String(5000), nullable=True)
-    gender = Column(String(50), nullable=False)
-    weight = Column(Integer, nullable=False)
-    shelter_id = Column(Integer, ForeignKey("shelter.id"))
-    shelter = relationship(Shelter)
-
-
-engine = create_engine("sqlite:///shelter.db")
+engine = create_engine("sqlite:///library.db")
 Base.metadata.create_all(engine)

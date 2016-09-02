@@ -6,7 +6,7 @@ from database_setup import Base, Shelter, Puppy
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///shelter.db')
+engine = create_engine('sqlite:///library.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -14,16 +14,13 @@ session = DBSession()
 
 
 @app.route('/')
-@app.route('/shelters/<int:shelter_id>/')
-def Shelters(shelter_id):
-    shelter = session.query(Shelter).filter_by(id=shelter_id).one()
-    items = session.query(Puppy).filter_by(shelter_id=shelter_id)
+def Library():
+    shelter = session.query(Books)
+    items = session.query(Book)
     output = ''
     for i in items:
-        output += '<div class="item-list">'
-        output += '<p>' + i.name + '</p>'
-        output += '<p>' + i.dateOfBirth + '</p>'
-        output += '<p>' + i.gender + '</p>'
+        output += '<div style="background: #f0f0f0; margin: 1rem;">'
+        output += '<p>' + i + '</p>'
         output += '</div>'
     return output
 
