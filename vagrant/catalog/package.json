@@ -4,8 +4,8 @@
   "description": "A library for the weird science",
   "main": "index.js",
   "dependencies": {
-    "font-awesome": "^4.6.3",
-    "foundation": "^4.2.1-1"
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3"
   },
   "devDependencies": {},
   "scripts": {
