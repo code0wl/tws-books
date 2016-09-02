@@ -6,25 +6,25 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 
-class Books(Base):
-    __tablename__ = "books"
+class Library(Base):
+    __tablename__ = "library"
     id = Column(Integer, primary_key=True)
-    category = Column(String(250), nullable=False)
+    name = Column(String(5000), nullable=False)
 
 
 class Book(Base):
     __tablename__ = "book"
     id = Column(Integer, primary_key=True)
-    name = Column(String(80), nullable=False)
+    title = Column(String(5000), nullable=True)
     isbn = Column(String(2000), nullable=True)
-    genre = Column(String(2000), nullable=False)
     description = Column(String(250), nullable=True)
     author = Column(String(1000), nullable=True)
-    release = Column(String(1000), nullable=True)
+    released = Column(String(1000), nullable=True)
     publisher = Column(String(1000), nullable=True)
-    image = Column(String(5000), nullable=True)
-    book_id = Column(Integer, ForeignKey("books.id"))
-    books = relationship(Books)
+    cover = Column(String(5000), nullable=True)
+    category = Column(String(2000), nullable=False)
+    book_id = Column(Integer, ForeignKey("library.id"))
+    books = relationship(Library)
 
 
 engine = create_engine("sqlite:///library.db")
