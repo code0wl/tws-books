@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Library, Book
@@ -14,16 +14,15 @@ session = DBSession()
 
 
 @app.route('/')
+def renderHome():
+    return render_template('index.html')
+
+
+@app.route('/books')
 def renderLib():
-    shelter = session.query(Library)
+    library = session.query(Library)
     items = session.query(Book)
-    output = ''
-    for i in items:
-        output += '<div style="background: #f0f0f0; margin: 1rem;">'
-        output += '<p>' + i.title + '</p>'
-        output += '<p>' + i.released + '</p>'
-        output += '</div>'
-    return output
+    return render_template('books.html', items=items)
 
 
 if __name__ == '__main__':

@@ -20,6 +20,12 @@ session.add(library1)
 book1 = Book(title="Java for dummies", isbn="isbn123",
              description="Some description", author="Some author",
              released="10-10-2010", category="Frontend")
+
+book2 = Book(title="In yo face", isbn="isbn123",
+             description="Some description", author="Some author",
+             released="10-10-2010", category="Frontend")
+
 session.add(book1)
+session.add(book2)
 
 session.commit()

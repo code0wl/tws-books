@@ -1,0 +1,20 @@
+{% include 'partials/head.html' %}
+
+<section>
+    <header>
+        <h1>Library collection</h1>
+    </header>
+    <article class="library-books">
+        <ul>
+            {% for i in items %}
+            <li class="library-books__book">
+                <h3>{{i.title}}</h3>
+                <p>{{i.description}}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
+
+
+{% include 'partials/footer.html' %}
