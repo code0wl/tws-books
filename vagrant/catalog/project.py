@@ -31,8 +31,8 @@ def renderBook(library_name, book_id):
         return notFound()
 
 
-@app.route('/books/<int:library_id>/new/', methods=['GET', 'POST'])
-def newBook(library_id):
+@app.route('/books/<string:library_name>/new/', methods=['GET', 'POST'])
+def newBook(library_name):
     if request.method == 'POST':
         newEntry = Book(description=request.form['description'],
                         title=request.form['title'],
@@ -48,9 +48,9 @@ def newBook(library_id):
         library = session.query(Library)
         session.add(newEntry)
         session.commit()
-        return redirect(url_for('renderLib', library_id=library_id))
+        return redirect(url_for('renderLib', library_name=library_name))
     else:
-        return render_template('addbook.html', library_id=library_id)
+        return render_template('addbook.html', library_name=library_name)
 
 
 @app.route('/books/')
