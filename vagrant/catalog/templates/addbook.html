@@ -1,6 +1,6 @@
 {% include 'partials/head.html' %}
 <div class="container">
-    <form method="post" action="">
+    <form name="newBook" method="post" action="{{url_for('newBook', book_id=book_id)}}">
 
         <div class="row">
             <div class="col-sm-5 form-group">
@@ -10,7 +10,6 @@
                 <input type="file" name="pic" accept="image/*">
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-sm-5 form-group">

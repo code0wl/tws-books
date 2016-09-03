@@ -1,5 +1,15 @@
 {% include 'partials/head.html' %}
 
-
+<section class="book-item">
+    <article class="library-books">
+        <ul>
+            <li class="library-books__book">
+                <h3> <span class="fa fa-{{item.medium}}"></span> {{item.title}} </h3>
+                <p>{{item.description}}</p>
+                <p><span class="fa fa-user"></span> Author: {{item.author}}</p>
+            </li>
+        </ul>
+    </article>
+</section>
 
 {% include 'partials/footer.html' %}
