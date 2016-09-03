@@ -1,7 +1,6 @@
 {% include 'partials/head.html' %}
 <h1> Are you sure you want to delete {{item.name}}? </h1>
-<form action="{{url_for('deleteBook', library_name=library_name, book_id=item.id)}}" method='post'>
+<form action="{{url_for('deleteBook', library_name=library_name, library_id=library_id, book_id=item.id)}}" method='post'>
     <input type='submit' value='Delete' />
-</form>
-<a href='{{url_for(' renderLib ', library_name=library_name)}}'> Cancel </a> 
+</form> 
 {% include 'partials/footer.html' %}

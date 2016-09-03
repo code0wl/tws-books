@@ -69,7 +69,7 @@ def deleteBook(library_name, book_id):
     if request.method == 'POST':
         session.delete(entry)
         session.commit()
-        return redirect(url_for('renderLib', library_name=library_name, book_id=book_id))
+        return redirect(url_for('renderLib', library_name=library_name))
     else:
         return render_template('remove.html', item=entry, library_name=library_name)
 
