@@ -2,7 +2,9 @@
 
 <section>
     <header>
-        <h1>Library collection</h1>
+        {% for i in library %}
+        <h1>{{i.name}} collection</h1>
+        {% endfor %}
     </header>
     <article class="library-books">
         <ul>

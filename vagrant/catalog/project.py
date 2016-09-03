@@ -31,12 +31,11 @@ def renderBook(book_id):
         return notFound()
 
 
-@app.route('/restaurant/<int:restaurant_id>/new/', methods=['GET', 'POST'])
+@app.route('/books/<int:book_id>/new/', methods=['GET', 'POST'])
 def newMenuItem(book_id):
     if request.method == 'POST':
-        newItem = Book(
-            title=request.form['name'], book_id=book_id)
-        session.add(newItem)
+        newEntry = Book(name=request.form['name'], book_id=book_id)
+        session.add(newEntry)
         session.commit()
         return redirect(url_for('renderBook', book_id=book_id))
     else:
@@ -45,8 +44,9 @@ def newMenuItem(book_id):
 
 @app.route('/books/')
 def renderLib():
+    library = session.query(Library)
     items = session.query(Book)
-    return render_template('books.html', items=items)
+    return render_template('books.html', items=items, library=library)
 
 
 if __name__ == '__main__':
