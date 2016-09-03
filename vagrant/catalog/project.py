@@ -18,11 +18,12 @@ def notFound():
 
 
 @app.route('/')
+@app.route('/<string:library_name>')
 def renderHome():
     return render_template('index.html')
 
 
-@app.route('/books/<string:library_name>/<int:book_id>/')
+@app.route('/<string:library_name>/books/<int:book_id>/')
 def renderBook(library_name, book_id):
     try:
         item = session.query(Book).filter_by(id=book_id).one()
@@ -31,8 +32,8 @@ def renderBook(library_name, book_id):
         return notFound()
 
 
-@app.route('/books/<string:library_name>/new/', methods=['GET', 'POST'])
-def newBook(library_name):
+@app.route('/<string:library_name>/<int:library_id>/books/new/', methods=['GET', 'POST'])
+def newBook(library_name, library_id):
     if request.method == 'POST':
         newEntry = Book(description=request.form['description'],
                         title=request.form['title'],
@@ -41,11 +42,10 @@ def newBook(library_name):
                         author=request.form['author'],
                         released=request.form['released'],
                         publisher=request.form['publisher'],
-                        book_id=book_id,
+                        library_id=library_id,
                         category=request.form['category'],
                         cover=request.form['cover'])
 
-        library = session.query(Library)
         session.add(newEntry)
         session.commit()
         return redirect(url_for('renderLib', library_name=library_name))
@@ -53,8 +53,9 @@ def newBook(library_name):
         return render_template('addbook.html', library_name=library_name)
 
 
-@app.route('/books/')
-def renderLib():
+@app.route('/<string:library_name>/')
+@app.route('/<string:library_name>/books/')
+def renderLib(library_name):
     library = session.query(Library)
     items = session.query(Book)
     return render_template('books.html', items=items, library=library)
