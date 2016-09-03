@@ -30,7 +30,7 @@ def renderHome():
 def renderBook(library_name, book_id):
     try:
         item = session.query(Book).filter_by(id=book_id).one()
-        return render_template('book.html', item=item)
+        return render_template('book.html', item=item, library_name=library_name)
     except:
         return notFound()
 
@@ -72,6 +72,33 @@ def deleteBook(library_name, book_id):
         return redirect(url_for('renderLib', library_name=library_name))
     else:
         return render_template('remove.html', item=entry, library_name=library_name)
+
+
+@app.route('/<string:library_name>/books/<int:book_id>/edit', methods=['GET', 'POST'])
+def editBook(library_name, book_id):
+    entry = session.query(Book).filter_by(id=book_id).one()
+    if request.method == 'POST':
+        if request.form['title']:
+            entry.title = request.form['title']
+        if request.form['description']:
+            entry.description = request.form['description']
+        if request.form['author']:
+            entry.author = request.form['author']
+        if request.form['category']:
+            entry.category = request.form['category']
+        if request.form['released']:
+            entry.released = request.form['released']
+        if request.form['medium']:
+            entry.medium = request.form['medium']
+        if request.form['cover']:
+            entry.cover = request.form['cover']
+        if request.form['isbn']:
+            entry.isbn = request.form['isbn']
+        session.add(entry)
+        session.commit()
+        return redirect(url_for('renderLib', library_name=library_name))
+    else:
+        return render_template('edit-book.html', item=entry, library_name=library_name)
 
 
 if __name__ == '__main__':

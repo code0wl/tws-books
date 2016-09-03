@@ -7,6 +7,10 @@
                 <h3> <span class="fa fa-{{item.medium}}"></span> {{item.title}} </h3>
                 <p>{{item.description}}</p>
                 <p><span class="fa fa-user"></span> Author: {{item.author}}</p>
+                <aside>
+                    <a href="/{{library_name}}/books/{{item.id}}/edit">Edit</a>
+                    <a href="/{{library_name}}/books/{{item.id}}/remove">Remove</a>
+                </aside>
             </li>
         </ul>
     </article>
