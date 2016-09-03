@@ -5,3 +5,4 @@ pg_config.shg
 **/redis-stable
 **/__pycache__
 **/.vagrant
+.vscode

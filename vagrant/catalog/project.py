@@ -50,7 +50,7 @@ def newBook(library_name, library_id):
         session.commit()
         return redirect(url_for('renderLib', library_name=library_name))
     else:
-        return render_template('addbook.html', library_name=library_name)
+        return render_template('addbook.html', library_name=library_name, library_id=library_id)
 
 
 @app.route('/<string:library_name>/')

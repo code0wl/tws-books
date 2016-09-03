@@ -14,7 +14,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Add Shelters
-library1 = Library(name="the-weird-science")
+library1 = Library(name="tws")
 session.add(library1)
 
 book1 = Book(title="Java for dummies", isbn="isbn123",
