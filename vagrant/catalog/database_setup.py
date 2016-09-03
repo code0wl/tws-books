@@ -28,6 +28,20 @@ class Book(Base):
     book_id = Column(Integer, ForeignKey("library.id"))
     book = relationship(Library)
 
+    @property
+    def serialize(self):
+        return {
+            'title': self.title,
+            'description': self.description,
+            'medium': self.medium,
+            'isbn': self.isbn,
+            'author': self.author,
+            'publisher': self.publisher,
+            'category': self.category,
+            'cover': self.cover,
+            'released': self.released
+        }
+
 
 engine = create_engine("sqlite:///library.db")
 Base.metadata.create_all(engine)

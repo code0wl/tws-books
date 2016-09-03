@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Library, Book
@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = './media/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
-app = Flask(__name__, static_folder='./node_modules')
+app = Flask(__name__, static_folder='./')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 engine = create_engine('sqlite:///library.db')
@@ -21,11 +21,13 @@ def notFound():
     return render_template('404.html')
 
 
+# Render home
 @app.route('/')
 def renderHome():
     return render_template('index.html')
 
 
+# Render a single book
 @app.route('/<string:library_name>/books/<int:book_id>/')
 def renderBook(library_name, book_id):
     try:
@@ -35,6 +37,7 @@ def renderBook(library_name, book_id):
         return notFound()
 
 
+# Create a book entry
 @app.route('/<string:library_name>/<int:library_id>/books/new/', methods=['GET', 'POST'])
 def newBook(library_name, library_id):
     if request.method == 'POST':
@@ -50,30 +53,47 @@ def newBook(library_name, library_id):
 
         session.add(newEntry)
         session.commit()
-        return redirect(url_for('renderLib', library_name=library_name))
+        return redirect(url_for('getLib', library_name=library_name))
     else:
         return render_template('addbook.html', library_name=library_name, library_id=library_id)
 
 
+# Query books
 @app.route('/<string:library_name>/')
 @app.route('/<string:library_name>/books/')
-def renderLib(library_name):
+def getLib(library_name):
     library = session.query(Library)
     items = session.query(Book)
     return render_template('books.html', items=items, library=library)
 
 
+# API for books
+@app.route('/<string:library_name>/books/JSON/')
+def getBookJSON(library_name):
+    items = session.query(Book)
+    return jsonify(Books=[i.serialize for i in items])
+
+
+# API for a specific book
+@app.route('/<string:library_name>/books/<int:book_id>/JSON/')
+def menuItemJSON(library_name, book_id):
+    entry = session.query(Book).filter_by(id=book_id).one()
+    return jsonify(entry=entry.serialize)
+
+
+# Remove a book
 @app.route('/<string:library_name>/books/<int:book_id>/remove', methods=['GET', 'POST'])
 def deleteBook(library_name, book_id):
     entry = session.query(Book).filter_by(id=book_id).one()
     if request.method == 'POST':
         session.delete(entry)
         session.commit()
-        return redirect(url_for('renderLib', library_name=library_name))
+        return redirect(url_for('getLib', library_name=library_name))
     else:
         return render_template('remove.html', item=entry, library_name=library_name)
 
 
+# Check to see if input value exist and edit them accordingly
 @app.route('/<string:library_name>/books/<int:book_id>/edit', methods=['GET', 'POST'])
 def editBook(library_name, book_id):
     entry = session.query(Book).filter_by(id=book_id).one()
@@ -96,7 +116,7 @@ def editBook(library_name, book_id):
             entry.isbn = request.form['isbn']
         session.add(entry)
         session.commit()
-        return redirect(url_for('renderLib', library_name=library_name))
+        return redirect(url_for('getLib', library_name=library_name))
     else:
         return render_template('edit-book.html', item=entry, library_name=library_name)
 
