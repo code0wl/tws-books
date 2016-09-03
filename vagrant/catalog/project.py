@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, session as login_session
 from sqlalchemy import create_engine
+import random
+import string
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Library, Book
 from werkzeug.utils import secure_filename
@@ -7,8 +9,7 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = './media/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
-app = Flask(__name__, static_folder='./')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app = Flask(__name__, static_folder='../catalog')
 
 engine = create_engine('sqlite:///library.db')
 Base.metadata.bind = engine
@@ -25,6 +26,18 @@ def notFound():
 @app.route('/')
 def renderHome():
     return render_template('index.html')
+
+
+# generate token
+state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                for x in xrange(32))
+
+# Render login
+@app.route('/<string:library_name>/login/')
+def getLogin(library_name):
+
+    login_session['state'] = state
+    return "The current session state is %s" % login_session['state']
 
 
 # Render a single book
@@ -122,6 +135,8 @@ def editBook(library_name, book_id):
 
 
 if __name__ == '__main__':
+    app.secret_key = state
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
 

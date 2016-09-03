@@ -1,6 +1,6 @@
 # Udacity catalog
 
-The Udacity catalog project is a simple database project completed for Udacity's full-stack nanodegree program program. The project demostrates usage of CRUD techniques to talk to a database while implementing useful features with Flask
+The catalog project is a simple database project completed for Udacity's full-stack nanodegree program program. The project demostrates usage of CRUD techniques to talk to a database while implementing useful features with Flask
 
 ## Documentation
 

@@ -1,9 +1,9 @@
 {% include 'partials/head.html' %} {% for f in library %}
-<section>
+<section class="container">
     <header>
         <h1>{{f.name}} collection</h1>
     </header>
-    <article class="library-books">
+    <article>
         <ul>
             {% for i in items %}
             <li class="library-books__book">
