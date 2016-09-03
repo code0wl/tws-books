@@ -1,25 +1,25 @@
 {% include 'partials/head.html' %}
 <div class="container">
-    <form name="newEntry" action="{{ url_for('renderBook', book_id=book_id )}}" method='post'>
+    <form action="{{ url_for('renderBook', book_id=book_id )}}" method='post'>
 
         <div class="row">
             <div class="col-sm-5 form-group">
-                <input name="title" class="form-control" placeholder="Title" type="text" required/>
+                <input id="title" name="title" class="form-control" placeholder="Title" type="text" required/>
             </div>
             <div class="col-sm-5 form-group">
-                <input type="file" name="cover" accept="image/*">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-5 form-group">
-                <input class="form-control" name="author" placeholder="Author" type="text" />
+                <input type="file" name="cover" id="cover" accept="image/*">
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-5 form-group">
-                <select name="" id="" class="form-control">  
+                <input id="author" class="form-control" name="author" placeholder="Author" type="text" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <select name="medium" id="medium" class="form-control">  
                     <option value="file-pdf-o">Pick a medium</option>
                     <option value="file-pdf-o">PDF</option>
                     <option value="book">Physical</option>
@@ -29,25 +29,19 @@
 
         <div class="row">
             <div class="col-sm-5 form-group">
-                <input name="author" class="form-control" placeholder="isbn" type="text" />
+                <input name="isbn" id="isbn" class="form-control" placeholder="isbn" type="text" />
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-5 form-group">
-                <textarea name="description" placeholder="Description" id="" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="description" id="description" placeholder="Description" id="" cols="30" rows="10" class="form-control"></textarea>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-5 form-group">
-                <input name="released" placeholder="Publication date" type="text" class="form-control" />
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-5 form-group">
-                <input name="released" placeholder="Publisher" type="text" class="form-control" />
+                <input name="released" id="released" placeholder="Publication date" type="text" class="form-control" />
             </div>
         </div>
 
@@ -59,9 +53,14 @@
                         <option value="">Backend</option>
                     </optgroup>
 
-                    <optgroup label="Native Technology"> Mobile Native
-                        <option value="">Frontend</option>
-                        <option value="">Backend</option>
+                    <optgroup label="Native Technology">
+                        <option value="">iOS</option>
+                        <option value="">Android</option>
+                    </optgroup>
+
+                    <optgroup label="Other"> 
+                        <option value=""> Fiction </option>
+                        <option value=""> Non-fiction </option>
                     </optgroup>
                 </select>
             </div>
