@@ -3,7 +3,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Library, Book
 
-
 app = Flask(__name__, static_folder='./node_modules')
 
 
@@ -14,6 +13,10 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+def notFound():
+    return render_template('404.html')
+
+
 @app.route('/')
 def renderHome():
     return render_template('index.html')
@@ -21,24 +24,23 @@ def renderHome():
 
 @app.route('/books/<int:book_id>/')
 def renderBook(book_id):
-    if book_id:
+    try:
         item = session.query(Book).filter_by(id=book_id).one()
         return render_template('book.html', item=item)
-    else:
-        return render_template('404.html')
+    except:
+        return notFound()
 
 
-@app.route('/books/<int:book_id>/new', methods=['GET', 'POST'])
-def newBook(book_id):
-    print book_id
+@app.route('/restaurant/<int:restaurant_id>/new/', methods=['GET', 'POST'])
+def newMenuItem(book_id):
     if request.method == 'POST':
         newItem = Book(
             title=request.form['name'], book_id=book_id)
         session.add(newItem)
         session.commit()
-        return redirect(url_for('newBook', book_id=book_id))
+        return redirect(url_for('renderBook', book_id=book_id))
     else:
-        return render_template('addbook.html')
+        return render_template('addbook.html', book_id=book_id)
 
 
 @app.route('/books/')
