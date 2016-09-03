@@ -22,8 +22,8 @@ def renderHome():
     return render_template('index.html')
 
 
-@app.route('/books/<int:book_id>/')
-def renderBook(book_id):
+@app.route('/books/<string:library_name>/<int:book_id>/')
+def renderBook(library_name, book_id):
     try:
         item = session.query(Book).filter_by(id=book_id).one()
         return render_template('book.html', item=item)
@@ -31,25 +31,26 @@ def renderBook(book_id):
         return notFound()
 
 
-@app.route('/books/<int:book_id>/new/', methods=['GET', 'POST'])
-def newMenuItem(book_id):
+@app.route('/books/<int:library_id>/new/', methods=['GET', 'POST'])
+def newBook(library_id):
     if request.method == 'POST':
-        newEntry = Book(name=request.form['name'],
-                        description=request.form['description'],
+        newEntry = Book(description=request.form['description'],
                         title=request.form['title'],
                         medium=request.form['medium'],
                         isbn=request.form['isbn'],
                         author=request.form['author'],
                         released=request.form['released'],
                         publisher=request.form['publisher'],
+                        book_id=book_id,
                         category=request.form['category'],
                         cover=request.form['cover'])
 
+        library = session.query(Library)
         session.add(newEntry)
         session.commit()
-        return redirect(url_for('renderBook', book_id=book_id))
+        return redirect(url_for('renderLib', library_id=library_id))
     else:
-        return render_template('addbook.html', book_id=book_id)
+        return render_template('addbook.html', library_id=library_id)
 
 
 @app.route('/books/')
