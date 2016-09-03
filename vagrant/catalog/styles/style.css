@@ -11,11 +11,14 @@ body {
     margin: auto;
 }
 
+.logo {
+    max-width: 400px;
+}
+
 nav {
     margin: 0 auto;
     display: block;
-    text-align: right;
-    background: darkred;
+    background: #af1e1e;
 }
 
 nav a {
@@ -27,13 +30,13 @@ nav a {
 nav a:focus,
 nav a:hover  {
     color: white;
-    background: darkorchid;
+    background: darkred;
 }
 
 footer {
     margin: 0 auto;
     color: white;
     display: block;
-    background: darkred;
+    background:#af1e1e;
     padding: 1rem; 
 }
