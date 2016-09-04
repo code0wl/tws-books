@@ -1,4 +1,6 @@
 {% include 'partials/head.html' %}
+{% set active_page = "addbook" %}
+
 <div class="container">
     <h1>Add book</h1>
     <form action="{{ url_for('newBook', library_name=library_name, library_id=library_id )}}" method='post'>
