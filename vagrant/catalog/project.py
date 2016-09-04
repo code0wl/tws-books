@@ -146,8 +146,7 @@ def gdisconnect():
             'Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    fragment = 'https://accounts.google.com/o/oauth2/revoke?token='
-    url = fragment + '%s' % login_session['access_token']
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
 
@@ -184,8 +183,9 @@ def renderBook(library_name, book_id):
 @app.route('/<string:library_name>/<int:library_id>/books/new/',
            methods=['GET', 'POST'])
 def newBook(library_name, library_id):
-    if 'user_name' not in login_session:
-        return redirect(url_for('showLogin', library_name=library_name))
+    if 'username' not in login_session:
+        print login_session
+        return redirect('/' + library_name + '/login/')
     if request.method == 'POST':
         newEntry = Book(description=request.form['description'],
                         title=request.form['title'],
@@ -232,14 +232,15 @@ def bookEntryJSON(library_name, book_id):
 @app.route('/<string:library_name>/books/<int:book_id>/remove',
            methods=['GET', 'POST'])
 def deleteBook(library_name, book_id):
-    if 'user_name' not in login_session:
-        return redirect(url_for('showLogin', library_name=library_name))
+    if 'username' not in login_session:
+        return redirect('/' + library_name + '/login/')
     entry = session.query(Book).filter_by(id=book_id).one()
     if request.method == 'POST':
         session.delete(entry)
         session.commit()
         return redirect(url_for('getLib', library_name=library_name))
     else:
+        print login_session
         return render_template('remove.html', item=entry,
                                library_name=library_name)
 
@@ -248,8 +249,8 @@ def deleteBook(library_name, book_id):
 @app.route('/<string:library_name>/books/<int:book_id>/edit',
            methods=['GET', 'POST'])
 def editBook(library_name, book_id):
-    if 'user_name' not in login_session:
-        return redirect(url_for('showLogin', library_name=library_name))
+    if 'username' not in login_session:
+        return redirect('/' + library_name + '/login/')
     entry = session.query(Book).filter_by(id=book_id).one()
     if request.method == 'POST':
         if request.form['title']:
