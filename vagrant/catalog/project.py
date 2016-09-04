@@ -133,6 +133,42 @@ def gconnect():
     return output
 
 
+# DISCONNECT - Revoke a current user's token and reset their login_session
+@app.route('/gdisconnect')
+def gdisconnect():
+    access_token = login_session['access_token']
+    print 'In gdisconnect access token is %s', access_token
+    print 'User name is: '
+    print login_session['username']
+    if access_token is None:
+        print 'Access Token is None'
+        response = make_response(json.dumps(
+            'Current user not connected.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    fragment = 'https://accounts.google.com/o/oauth2/revoke?token='
+    url = fragment + '%s' % login_session['access_token']
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[0]
+
+    print 'result is '
+    print result
+    if result['status'] == '200':
+        del login_session['access_token']
+        del login_session['gplus_id']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        response = make_response(json.dumps(
+            'Failed to revoke token for given user.', 400))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+
 # Render a single book
 @app.route('/<string:library_name>/books/<int:book_id>/')
 def renderBook(library_name, book_id):
@@ -148,6 +184,8 @@ def renderBook(library_name, book_id):
 @app.route('/<string:library_name>/<int:library_id>/books/new/',
            methods=['GET', 'POST'])
 def newBook(library_name, library_id):
+    if 'user_name' not in login_session:
+        return redirect(url_for('showLogin', library_name=library_name))
     if request.method == 'POST':
         newEntry = Book(description=request.form['description'],
                         title=request.form['title'],
@@ -185,7 +223,7 @@ def getBookJSON(library_name):
 
 # API for a specific book
 @app.route('/<string:library_name>/books/<int:book_id>/JSON/')
-def menuItemJSON(library_name, book_id):
+def bookEntryJSON(library_name, book_id):
     entry = session.query(Book).filter_by(id=book_id).one()
     return jsonify(entry=entry.serialize)
 
@@ -194,6 +232,8 @@ def menuItemJSON(library_name, book_id):
 @app.route('/<string:library_name>/books/<int:book_id>/remove',
            methods=['GET', 'POST'])
 def deleteBook(library_name, book_id):
+    if 'user_name' not in login_session:
+        return redirect(url_for('showLogin', library_name=library_name))
     entry = session.query(Book).filter_by(id=book_id).one()
     if request.method == 'POST':
         session.delete(entry)
@@ -208,6 +248,8 @@ def deleteBook(library_name, book_id):
 @app.route('/<string:library_name>/books/<int:book_id>/edit',
            methods=['GET', 'POST'])
 def editBook(library_name, book_id):
+    if 'user_name' not in login_session:
+        return redirect(url_for('showLogin', library_name=library_name))
     entry = session.query(Book).filter_by(id=book_id).one()
     if request.method == 'POST':
         if request.form['title']:

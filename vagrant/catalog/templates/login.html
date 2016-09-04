@@ -13,7 +13,6 @@
               data-accesstype="offline"
               data-cookiepolicy="single_host_origin"
               data-callback="signInCallback"
-              data-approvalprompt="force">
         </span>
     </div>
 
@@ -33,7 +32,7 @@
                         if (result) {
                             $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
                             setTimeout(function() {
-                            window.location.href = "/restaurant";
+                            window.location.href = "/";
                         }, 4000);
                         
                         } else if (authResult['error']) {
