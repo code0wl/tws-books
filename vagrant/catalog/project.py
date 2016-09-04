@@ -136,24 +136,23 @@ def gconnect():
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @app.route('/gdisconnect')
 def gdisconnect():
-    access_token = login_session['access_token']
-    print 'In gdisconnect access token is %s', access_token
-    print 'User name is: '
-    print login_session['username']
-    if access_token is None:
+    credentials = login_session.get('credentials')
+    print login_session
+    if credentials is None:
         print 'Access Token is None'
         response = make_response(json.dumps(
             'Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    url = 'https://accounts.google.com/o/oauth2/revoke?accesstoken=%s' % credentials.access_token
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
 
     print 'result is '
     print result
+
     if result['status'] == '200':
-        del login_session['access_token']
+        del login_session['credentials']
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
@@ -184,7 +183,6 @@ def renderBook(library_name, book_id):
            methods=['GET', 'POST'])
 def newBook(library_name, library_id):
     if 'username' not in login_session:
-        print login_session
         return redirect('/' + library_name + '/login/')
     if request.method == 'POST':
         newEntry = Book(description=request.form['description'],
@@ -240,7 +238,6 @@ def deleteBook(library_name, book_id):
         session.commit()
         return redirect(url_for('getLib', library_name=library_name))
     else:
-        print login_session
         return render_template('remove.html', item=entry,
                                library_name=library_name)
 
