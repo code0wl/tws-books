@@ -1,13 +1,18 @@
-body {
+ul, body {
     background: #f0f0f0;
     padding: 0;
     margin: 0;
 }
 
+ul {
+    background: transparent
+}
+
 .container {
     background: white;
-    width: 100% !important;
-    padding: 5rem;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 5rem;
     margin: auto;
 }
 
@@ -24,19 +29,40 @@ nav {
 nav a {
     color: white;
     display: inline-block;
-    padding: 1rem; 
+    padding: 1rem;
 }
 
-nav a:focus,
-nav a:hover  {
+h1 {
+    font-weight: 100;
+    margin: 3rem 0;
+}
+
+a {
+    color: #af1e1e;
+}
+
+a:hover, a:focus {
+    color: #af1e1e;
+}
+
+nav a:focus, nav a:hover {
     color: white;
     background: darkred;
 }
 
 footer {
-    margin: 0 auto;
-    color: white;
-    display: block;
-    background:#af1e1e;
-    padding: 1rem; 
+    padding: 1rem;
+}
+
+.btn.btn-primary {
+    background: #af1e1e;
+    border-color: darkred;
+}
+
+.library-books__book {
+    display: inline-block;
+    padding: 3rem;
+    margin: 0 2rem 0 0;
+    width: 300px;
+    border: 1px solid #f0f0f0;
 }

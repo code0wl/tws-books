@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, flash, session as login_session
+from flask import Flask, render_template, request, redirect, url_for, jsonify,\
+    flash, session as login_session
 from sqlalchemy import create_engine
 import random
 import string
@@ -18,6 +19,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+# General 404 page
 def notFound():
     return render_template('404.html')
 
@@ -28,14 +30,11 @@ def renderHome():
     return render_template('index.html')
 
 
-# generate token
-state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                for x in xrange(32))
-
 # Render login
 @app.route('/<string:library_name>/login/')
-def getLogin(library_name):
-
+def showLogin(library_name):
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
     login_session['state'] = state
     return "The current session state is %s" % login_session['state']
 
@@ -45,13 +44,15 @@ def getLogin(library_name):
 def renderBook(library_name, book_id):
     try:
         item = session.query(Book).filter_by(id=book_id).one()
-        return render_template('book.html', item=item, library_name=library_name)
+        return render_template('book.html', item=item,
+                               library_name=library_name)
     except:
         return notFound()
 
 
 # Create a book entry
-@app.route('/<string:library_name>/<int:library_id>/books/new/', methods=['GET', 'POST'])
+@app.route('/<string:library_name>/<int:library_id>/books/new/',
+           methods=['GET', 'POST'])
 def newBook(library_name, library_id):
     if request.method == 'POST':
         newEntry = Book(description=request.form['description'],
@@ -68,7 +69,8 @@ def newBook(library_name, library_id):
         session.commit()
         return redirect(url_for('getLib', library_name=library_name))
     else:
-        return render_template('addbook.html', library_name=library_name, library_id=library_id)
+        return render_template('addbook.html', library_name=library_name,
+                               library_id=library_id)
 
 
 # Query books
@@ -95,7 +97,8 @@ def menuItemJSON(library_name, book_id):
 
 
 # Remove a book
-@app.route('/<string:library_name>/books/<int:book_id>/remove', methods=['GET', 'POST'])
+@app.route('/<string:library_name>/books/<int:book_id>/remove',
+           methods=['GET', 'POST'])
 def deleteBook(library_name, book_id):
     entry = session.query(Book).filter_by(id=book_id).one()
     if request.method == 'POST':
@@ -103,11 +106,13 @@ def deleteBook(library_name, book_id):
         session.commit()
         return redirect(url_for('getLib', library_name=library_name))
     else:
-        return render_template('remove.html', item=entry, library_name=library_name)
+        return render_template('remove.html', item=entry,
+                               library_name=library_name)
 
 
 # Check to see if input value exist and edit them accordingly
-@app.route('/<string:library_name>/books/<int:book_id>/edit', methods=['GET', 'POST'])
+@app.route('/<string:library_name>/books/<int:book_id>/edit',
+           methods=['GET', 'POST'])
 def editBook(library_name, book_id):
     entry = session.query(Book).filter_by(id=book_id).one()
     if request.method == 'POST':
@@ -131,12 +136,12 @@ def editBook(library_name, book_id):
         session.commit()
         return redirect(url_for('getLib', library_name=library_name))
     else:
-        return render_template('edit-book.html', item=entry, library_name=library_name)
+        return render_template('edit-book.html', item=entry,
+                               library_name=library_name)
 
 
 if __name__ == '__main__':
-    app.secret_key = state
-    app.config['SESSION_TYPE'] = 'filesystem'
+    app.secret_key = 'super_secret_key'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
 
