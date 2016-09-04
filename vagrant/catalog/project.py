@@ -102,7 +102,7 @@ def gconnect():
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
+        response = make_response(json.dumps('Already connected.'),
                                  200)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -134,25 +134,21 @@ def gconnect():
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
-@app.route('/gdisconnect')
+@app.route('/gdisconnect/')
 def gdisconnect():
-    credentials = login_session.get('credentials')
-    print login_session
-    if credentials is None:
+    access_token = login_session.get('credentials').access_token
+    if access_token is None:
         print 'Access Token is None'
         response = make_response(json.dumps(
             'Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    url = 'https://accounts.google.com/o/oauth2/revoke?accesstoken=%s' % credentials.access_token
+
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-
-    print 'result is '
-    print result
-
     if result['status'] == '200':
-        del login_session['credentials']
+        del login_session.get('credentials').access_token
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
