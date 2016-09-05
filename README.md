@@ -13,5 +13,5 @@ After ensuring you have both Vagrant and virtual box installed. Please follow th
 1. Once inside of the vagrant folder run ```$ vagrant up ``` command in your terminal (!Important only works in vagrant env, please do this step)
 1. After step 3 has been installed successfully. run ```$ vagrant ssh ``` inside of your terminal 
 1. While you are in your vagrant env. Look for the directory catalog and cd into it
-1. Execute the following command ```$  python database_setup.py && python database_items.py && python project.py ```
+1. Execute the following command ```$  python database_setup.py && python database_items.py && npm i && python project.py ```
 1. Open your browser and insert the following url: http://localhost:5333/
