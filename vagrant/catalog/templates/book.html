@@ -6,19 +6,19 @@
             <li class="library-books__book">
                 <h3> <span class="fa fa-{{item.medium}}"></span> {{item.title}} </h3>
                 <p>{{item.description}}</p>
-                <span class="fa fa-user"></span> Author: {{i.author}}
-                {% if i.uuid %}
+                <span class="fa fa-user"></span> Author: {{item.author}}
+                {% if item.uuid %}
                     <div>
-                        <img class="user-image" src="{{i.addedByImage}}"/> {{i.addedBy}}
+                        <img class="user-image" src="{{item.addedByImage}}"/> {{item.addedBy}}
                     </div>
                 {% endif %}
-                {% if session.gplus_id == i.uuid %}
+                {% if session.gplus_id == item.uuid %}
                     <aside class="row">
                         <div class="col-sm-5">
-                            <a href="/{{f.name}}/books/{{i.id}}/edit">Edit</a>
+                            <a href="/{{library_name}}/books/{{item.id}}/edit">Edit</a>
                         </div>
                         <div class="col-sm-5">
-                            <a href="/{{f.name}}/books/{{i.id}}/remove">Remove</a>
+                            <a href="/{{library_name}}/books/{{item.id}}/remove">Remove</a>
                         </div>
                     </aside>
                 {% endif %}
