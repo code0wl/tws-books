@@ -50,8 +50,8 @@ def showLogin(library_name):
     return render_template('login.html', STATE=state)
 
 
-@app.route('/gconnect', methods=['POST'])
-def gconnect():
+@app.route('/<string:library_name>/gconnect', methods=['POST'])
+def gconnect(library_name):
     # Validate state token
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -102,7 +102,7 @@ def gconnect():
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Already connected.'),
+        response = make_response(json.dumps('Current user is already connected.'),
                                  200)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -128,6 +128,7 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
@@ -137,6 +138,7 @@ def gconnect():
 @app.route('/gdisconnect/')
 def gdisconnect():
     access_token = login_session.get('credentials').access_token
+
     if access_token is None:
         print 'Access Token is None'
         response = make_response(json.dumps(
@@ -148,7 +150,7 @@ def gdisconnect():
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
-        del login_session.get('credentials').access_token
+        del login_session['credentials']
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
@@ -273,6 +275,6 @@ def editBook(library_name, book_id):
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5333)
 
 print __name__

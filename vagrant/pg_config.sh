@@ -8,6 +8,9 @@ pip install requests
 pip install httplib2
 pip install redis
 pip install passlib
+pip install werkzeug==0.8.3
+pip install flask==0.9
+pip install Flask-Login==0.1.3
 pip install itsdangerous
 pip install flask-httpauth
 su postgres -c 'createuser -dRS vagrant'

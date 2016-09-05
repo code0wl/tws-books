@@ -8,7 +8,7 @@
     <div id="signInButton">
         <span class="g-signin"
               data-scope="openid email"
-              data-clientid="1084685066094-doqtctt1if2kfrfc1ks8rdb6lv8skisi.apps.googleusercontent.com"
+              data-clientid="1084685066094-r5t14utm64euhbl9ien3mfa4nqm2pofh.apps.googleusercontent.com"
               data-redirecturi="postmessage"
               data-accesstype="offline"
               data-cookiepolicy="single_host_origin"
@@ -27,7 +27,7 @@
                 $('#signinButton').attr('style', 'display: none');
                 $.ajax({
                     type: 'POST',
-                    url: '/gconnect?state={{STATE}}',
+                    url: '/tws/gconnect?state={{STATE}}',
                     processData: false,
                     data: authResult['code'],
                     contentType: 'application/octet-stream; charset=utf-8',
