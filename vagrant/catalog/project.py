@@ -228,12 +228,16 @@ def bookEntryJSON(library_name, book_id):
 
 
 # Remove a book
-@app.route('/<string:library_name>/books/<int:book_id>/remove',
+@app.route('/<string:library_name>/books/<int:book_id>/remove/',
            methods=['GET', 'POST'])
 def deleteBook(library_name, book_id):
+    u = 'username'
+    entry = session.query(Book).filter_by(id=book_id).one()
     if 'username' not in login_session:
         return redirect('/' + library_name + '/login/')
-    entry = session.query(Book).filter_by(id=book_id).one()
+    elif u in login_session and entry.uuid != login_session['gplus_id']:
+        return redirect('/' + library_name + '/books/')
+
     if request.method == 'POST':
         session.delete(entry)
         session.commit()
@@ -248,10 +252,11 @@ def deleteBook(library_name, book_id):
            methods=['GET', 'POST'])
 def editBook(library_name, book_id):
     entry = session.query(Book).filter_by(id=book_id).one()
-    currentID = login_session['gplus_id']
-
-    if 'username' not in login_session or entry.uuid != currentID:
+    u = 'username'
+    if u not in login_session:
         return redirect('/' + library_name + '/login/')
+    elif u in login_session and entry.uuid != login_session['gplus_id']:
+        return redirect('/' + library_name + '/books/')
 
     if request.method == 'POST':
         if request.form['title']:
