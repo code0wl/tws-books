@@ -247,9 +247,12 @@ def deleteBook(library_name, book_id):
 @app.route('/<string:library_name>/books/<int:book_id>/edit',
            methods=['GET', 'POST'])
 def editBook(library_name, book_id):
-    if 'username' not in login_session:
-        return redirect('/' + library_name + '/login/')
     entry = session.query(Book).filter_by(id=book_id).one()
+    currentID = login_session['gplus_id']
+
+    if 'username' not in login_session or entry.uuid != currentID:
+        return redirect('/' + library_name + '/login/')
+
     if request.method == 'POST':
         if request.form['title']:
             entry.title = request.form['title']
