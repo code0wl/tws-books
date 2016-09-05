@@ -53,6 +53,10 @@
                 <input name="released" placeholder="Publication date" type="date" class="form-control" />
             </div>
         </div>
+    
+        <input name="addedBy" type="hidden" value="{{session.username}}"/>
+        <input name="addedByImage" type="hidden" value="{{session.picture}}"/>
+        <input name="uuid" type="hidden" value="{{session.gplus_id}}"/>
 
         <div class="row">
             <div class="col-sm-5 form-group">
@@ -76,6 +80,9 @@
         </div>
 
         <div class="row">
+            <div class="col-sm-5 form-group">
+                <a href="/tws/books/" class="btn btn-secondary"> Cancel</a>
+            </div>
             <div class="col-sm-5 form-group">
                 <button class="btn btn-primary" type="submit">Add book</button>
             </div>

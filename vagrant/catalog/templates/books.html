@@ -9,18 +9,27 @@
             <li class="library-books__book">
                 <h3> <span class="fa fa-{{i.medium}}"></span> <a href="/{{f.name}}/books/{{i.id}}"> {{i.title}} </a> </h3>
                 <p>
-                    <img src="{{i.cover}}"/>
-                    {{i.description}}
+                    <img src="{{i.cover}}" /> {{i.description}}
                 </p>
                 <div class="meta-data">
                     <p>
                         <span class="fa fa-user"></span> Author: {{i.author}}
-                        <span class="fa fa-user"></span> AddedBy: {{i.addedBy}}
+                        {% if i.uuid %}
+                            <div>
+                                <img class="user-image" src="{{i.addedByImage}}"/> {{i.addedBy}}
+                            </div>
+                        {% endif %}
                     </p>
-                    <aside>
-                        <a href="/{{f.name}}/books/{{i.id}}/edit">Edit</a>
-                        <a href="/{{f.name}}/books/{{i.id}}/remove">Remove</a>
-                    </aside>
+                    {% if session.gplus_id == i.uuid %}
+                        <aside class="row">
+                            <div class="col-sm-5">
+                                <a href="/{{f.name}}/books/{{i.id}}/edit">Edit</a>
+                            </div>
+                            <div class="col-sm-5">
+                                <a href="/{{f.name}}/books/{{i.id}}/remove">Remove</a>
+                            </div>
+                        </aside>
+                    {% endif %}
                 </div>
             </li>
             {% endfor %}

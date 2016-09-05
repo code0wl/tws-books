@@ -22,9 +22,11 @@ class Book(Base):
     author = Column(String(1000), nullable=True)
     released = Column(String(1000), nullable=True)
     publisher = Column(String(1000), nullable=True)
+    uuid = Column(String(1000), nullable=True)
     addedBy = Column(String(1000), nullable=True)
     cover = Column(String(5000), nullable=True)
     category = Column(String(2000), nullable=False)
+    addedByImage = Column(String(5000), nullable=True)
     book_id = Column(Integer, ForeignKey("library.id"))
     book = relationship(Library)
 

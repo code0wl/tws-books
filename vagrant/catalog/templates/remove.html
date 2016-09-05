@@ -1,9 +1,15 @@
 {% include 'partials/head.html' %}
 <section class="container">
-    <h1> Are you sure you want to delete {{item.name}}? </h1>
-    <a href="/{{library_name}}/books" class="btn btn-primary"> Cancel </a>
-    <form action="{{url_for('deleteBook', library_name=library_name, library_id=library_id, book_id=item.id)}}" method='post'>
-        <button type='submit' class="btn btn-secondary"> Delete </button>
-    </form>
+    <div class="row">
+        <h1> Are you sure you want to delete {{item.name}}? </h1>
+        <div class="col-sm-5">
+            <a href="/{{library_name}}/books" class="btn btn-primary"> Cancel </a>
+        </div>
+        <div class="col-sm-5">
+            <form action="{{url_for('deleteBook', library_name=library_name, library_id=library_id, book_id=item.id)}}" method='post'>
+                <button type='submit' class="btn btn-secondary"> Delete </button>
+            </form>
+        </div>
+    </div>
 </section>
 {% include 'partials/footer.html' %}

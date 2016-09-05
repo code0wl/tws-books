@@ -128,7 +128,7 @@ def gconnect(library_name):
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " class="user-image"> '
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
@@ -157,7 +157,7 @@ def gdisconnect():
         del login_session['picture']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return response
+        return render_template('index.html')
     else:
         response = make_response(json.dumps(
             'Failed to revoke token for given user.', 400))
@@ -186,7 +186,10 @@ def newBook(library_name, library_id):
         newEntry = Book(description=request.form['description'],
                         title=request.form['title'],
                         medium=request.form['medium'],
+                        addedBy=request.form['addedBy'],
+                        addedByImage=request.form['addedByImage'],
                         isbn=request.form['isbn'],
+                        uuid=request.form['uuid'],
                         author=request.form['author'],
                         released=request.form['released'],
                         publisher=request.form['publisher'],

@@ -19,8 +19,14 @@
                     <img class="logo" src="{{ url_for('static', filename='media/logo.png') }}" />
                 </a>
                 <a href="/tws/books">All books</a>
-                <a href="/tws/1/books/new">Add a book</a>
-                <a href="/tws/login">login</a>
+                <a href="/tws/1/books/new">Add a book</a> 
+                {% if 'username' not in session %}
+                    <a href="/tws/login">login</a> 
+                {% else %}
+                    <img class="user-image" src="{{session.picture}}" title="{{session.username}}" />
+                    <span>{{session.username}}</span>
+                    <a href="/gdisconnect"> Logout </a> 
+                {% endif %}
             </nav>
         </header>
     </section>
