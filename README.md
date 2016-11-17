@@ -1,11 +1,7 @@
-# Udacity catalog
-
+# The Weird Science Book collection
 The catalog project is a simple database project completed for Udacity's full-stack nanodegree program program. The project demostrates usage of CRUD techniques to talk to a database while implementing useful features with Flask
 
 ## Documentation
-
-
-
 After ensuring you have both Vagrant and virtual box installed. Please follow the instructions below to run the project
 
 1. Download or clone files
