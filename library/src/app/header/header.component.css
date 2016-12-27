@@ -1,0 +1,33 @@
+header, #main-nav, #main-nav ul {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#main-nav {
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+
+#main-nav a {
+    display: inline-block;
+    padding: 10px 15px;
+}
+
+header {
+    background: #af1e1e;
+}
+
+#logo-container {
+    width: 60%;
+    max-width: 400px;
+}
+
+#logo-container img {
+    width: 100%;
+}
+
+
+
+
+
