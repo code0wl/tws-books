@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Some page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+
+<body>
+    <div id="fb-root"></div>
+    <section>
+        <header>
+            <nav>
+                <a class="clean" href="/">
+                    <img class="logo" src="{{ url_for('static', filename='media/logo.png') }}" />
+                </a>
+                <a href="/tws/books">All books</a>
+                <a href="/tws/1/books/new">Add a book</a> 
+                {% if 'username' not in session %}
+                    <a href="/tws/login">login</a> 
+                {% else %}
+                    <img class="user-image" src="{{session.picture}}" title="{{session.username}}" />
+                    <span>{{session.username}}</span>
+                    <a href="/gdisconnect"> Logout </a> 
+                {% endif %}
+            </nav>
+        </header>
+    </section>

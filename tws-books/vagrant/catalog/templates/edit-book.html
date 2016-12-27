@@ -1,0 +1,88 @@
+{% include 'partials/head.html' %}
+
+<div class="container">
+    <h1>Edit book</h1>
+    <form action="{{url_for('editBook', library_name=library_name, library_id=library_id, book_id=item.id)}}" method='post'>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="title" value="{{item.title}}" class="form-control" placeholder="Title" type="text" required/>
+            </div>
+            <div class="col-sm-5 form-group">
+                <input type="file" class="btn btn-primary" name="cover" value="{{item.cover}}" accept="image/*">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input class="form-control" value="{{item.author}}" name="author" placeholder="Author" type="text" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <select name="medium" value="{{item.medium}}" class="form-control" required>  
+                    <option>Pick a medium</option>
+                    <option value="file-pdf-o">PDF</option>
+                    <option value="book">Physical</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="isbn" value="{{item.title}}" value="{{item.isbn}}" class="form-control" placeholder="isbn" type="text" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <textarea name="description" value="{{item.description}}" placeholder="Description" id="" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="publisher" value="{{item.publisher}}" placeholder="publisher" type="text" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="released" value="{{item.released}}" placeholder="Publication date" type="date" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <select name="category" value="{{item.category}}" class="form-control" required>
+                    <optgroup label="Web Technology">
+                        <option value="frontend">Frontend</option>
+                        <option value="backend">Backend</option>
+                    </optgroup>
+
+                    <optgroup label="Native Technology">
+                        <option value="ios">iOS</option>
+                        <option value="android">Android</option>
+                    </optgroup>
+
+                    <optgroup label="Other"> 
+                        <option value=""> Fiction </option>
+                        <option value=""> Non-fiction </option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <a href="/tws/books/" class="btn btn-secondary"> Cancel</a>
+            </div>
+            <div class="col-sm-5 form-group">
+                <button class="btn btn-primary" type="submit">Edit book</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+{% include 'partials/footer.html' %}

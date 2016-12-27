@@ -1,0 +1,13 @@
+**/redis-stable
+**/__pycache__
+**/.vagrant
+
+# custom
+.vscode/
+*.pyc
+build/
+.idea/
+node_modules
+.vagrant
+*.db
+.log

@@ -1,0 +1,93 @@
+{% include 'partials/head.html' %}
+{% set active_page = "addbook" %}
+
+<div class="container">
+    <h1>Add book</h1>
+    <form action="{{ url_for('newBook', library_name=library_name, library_id=library_id )}}" method='post'>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="title" class="form-control" placeholder="Title" type="text" required/>
+            </div>
+            <div class="col-sm-5 form-group">
+                <input class="btn btn-primary" type="file" name="cover" accept="image/*">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input class="form-control" name="author" placeholder="Author" type="text" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <select name="medium" class="form-control">  
+                    <option>Pick a medium</option>
+                    <option value="file-pdf-o">PDF</option>
+                    <option value="book">Physical</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="isbn" class="form-control" placeholder="isbn" type="text" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <textarea name="description" placeholder="Description" id="" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="publisher" placeholder="publisher" type="text" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <input name="released" placeholder="Publication date" type="date" class="form-control" />
+            </div>
+        </div>
+    
+        <input name="addedBy" type="hidden" value="{{session.username}}"/>
+        <input name="addedByImage" type="hidden" value="{{session.picture}}"/>
+        <input name="uuid" type="hidden" value="{{session.gplus_id}}"/>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <select name="category" class="form-control" required>
+                    <optgroup label="Web Technology">
+                        <option value="frontend">Frontend</option>
+                        <option value="backend">Backend</option>
+                    </optgroup>
+
+                    <optgroup label="Native Technology">
+                        <option value="ios">iOS</option>
+                        <option value="android">Android</option>
+                    </optgroup>
+
+                    <optgroup label="Other"> 
+                        <option value=""> Fiction </option>
+                        <option value=""> Non-fiction </option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <a href="/tws/books/" class="btn btn-secondary"> Cancel</a>
+            </div>
+            <div class="col-sm-5 form-group">
+                <button class="btn btn-primary" type="submit">Add book</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+{% include 'partials/footer.html' %}

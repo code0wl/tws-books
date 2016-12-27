@@ -1,0 +1,90 @@
+ul, body {
+    background: #f0f0f0;
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    background: transparent
+}
+
+.container {
+    background: white;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 5rem;
+    margin: auto;
+}
+
+.logo {
+    max-width: 400px;
+}
+
+nav {
+    margin: 0 auto;
+    display: block;
+    background: #af1e1e;
+}
+
+nav a {
+    color: white;
+    display: inline-block;
+    padding: 1rem;
+}
+
+.clean {
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    font-weight: 100;
+    margin: 3rem 0;
+}
+
+a {
+    color: #af1e1e;
+}
+
+a:hover, a:focus {
+    color: #af1e1e;
+}
+
+nav a:focus, nav a:hover {
+    color: white;
+    background: darkred;
+}
+
+nav .selected {
+    color: white;
+    text-decoration: underline;
+}
+
+footer {
+    padding: 1rem;
+}
+
+.btn.btn-primary {
+    background: #af1e1e;
+    border-color: darkred;
+}
+
+.library-books__book {
+    display: inline-block;
+    padding: 3rem;
+    vertical-align: top;
+    margin: 0 2rem 2rem 0;
+    width: 300px;
+    border: 1px solid #f0f0f0;
+}
+
+.user-image {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.menu-creds {
+    float: right;
+    padding: 4rem;
+}
